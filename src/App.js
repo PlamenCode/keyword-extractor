@@ -16,17 +16,17 @@ function App() {
     async function extractKeywords(text){
         setLoading(true);
         setIsOpen(true);
-        console.log(process.env.OPEN_AI_API_KEY);
-        console.log(process.env.OPEN_AI_API_URL);
+        console.log(process.env.REACT_APP_OPEN_AI_API_KEY);
+        console.log(process.env.REACT_APP_OPEN_AI_API_URL);
 
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env.OPEN_AI_API_KEY}`
+                Authorization: `Bearer ${process.env.REACT_APP_OPEN_AI_API_KEY}`
             },
             body: JSON.stringify({
-                model: 'gpt-3.5-turbo',
+                model: 'text-davinci-003',
                 prompt: `Extract keywords from this text. Make the first letter of each word uppercase and separate with commas\n\n` + text + '',
                 temperature: 0.5,
                 max_token: 60,
@@ -34,7 +34,7 @@ function App() {
             })
         };
 
-        const response = await fetch(process.env.OPEN_AI_API_URL, options);
+        const response = await fetch('https://api.openai.com/v1/completions', options);
         const resultJson = await response.json();
         const data = resultJson.choices[0].text.trim();
         console.log(data);
