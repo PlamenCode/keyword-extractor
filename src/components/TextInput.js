@@ -17,6 +17,7 @@ export default function TextInput({ extractKeywords }) {
             })
         } else{
             extractKeywords(text);
+            setText('');
         }
     };
 
